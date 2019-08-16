@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SnakeUnit = styled.div`
+const EmptyUnit = styled.div`
   display: inline-block;
   box-sizing: border-box;
   height: 1rem;
@@ -9,7 +9,7 @@ const SnakeUnit = styled.div`
   user-select: none;
   cursor: pointer;
   outline: 0;
-  background: #506d59;
+  background: gainsboro;
 `;
 
-export default SnakeUnit;
+export default EmptyUnit;
