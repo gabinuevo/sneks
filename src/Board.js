@@ -10,21 +10,26 @@ export default class Board extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      snakeLength: 1,
       loading: true,
+      snakeLength: 1,
+      snakeCoords: [], // x and y
       direction: 'right',
-      board: this.createBoard(),
+      board: null,
       intervalID: null,
     }
 
+    this.endGame = this.endGame.bind(this);
     this.moveSnake = this.moveSnake.bind(this);
     this.createBoard = this.createBoard.bind(this);
+    this.updateSnakeCoords = this.updateSnakeCoords.bind(this);
     this.changeSnakeDirection = this.changeSnakeDirection.bind(this);
   }
 
   createBoard() {
     const board = []
+
     const snakeLocation = Math.floor(Math.random() * 30);
+
     let snackLocation = Math.floor(Math.random() * 30);
     // if the snack is located at the head of snake, move the snack
     snackLocation === snakeLocation && snackLocation++;
@@ -46,16 +51,48 @@ export default class Board extends Component {
         board.push(row);
       }
     }
-    return board;
+    return [board, [snakeLocation, snakeLocation]];
+  }
+
+  updateSnakeCoords(x, y) {
+    this.setState({ ...this.state, snakeCoords: [x, y] });
   }
 
   componentDidMount() {
     const intervalID = setInterval(this.moveSnake, 1000);
-    this.setState({ ...this.state, loading: false, intervalID }, this.moveSnake);
+    const newGame = this.createBoard();
+    this.setState({
+      ...this.state,
+      board: newGame[0],
+      snakeCoords: newGame[1],
+      loading: false,
+      intervalID,
+    });
+  }
+
+  endGame() {
+    clearInterval(this.state.intervalID);
   }
 
   moveSnake() {
-    const direction = this.state.direction;
+    let { direction, snakeCoords, board, snakeLength } = this.state;
+    const newBoard = board.map(r => r.slice());
+    let i = 0;
+    let currSnakeUnitX = snakeCoords[0];
+    let currSnakeUnitY = snakeCoords[1];
+    while (i < snakeLength) {
+      if (i === 0) {
+        if (direction === 'right') {
+          let placeholder = board[currSnakeUnitX][currSnakeUnitY];
+          newBoard[currSnakeUnitX + 1][currSnakeUnitY] = placeholder;
+          newBoard[currSnakeUnitX][currSnakeUnitY] = null;
+        }
+      } else {
+
+      }
+      
+      i++;
+    }
   }
 
   changeSnakeDirection(e) {
