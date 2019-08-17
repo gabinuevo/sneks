@@ -14,10 +14,11 @@ export default class Board extends Component {
       loading: true,
       direction: 'right',
       board: this.createBoard(),
+      intervalID: null,
     }
 
-    this.createBoard = this.createBoard.bind(this);
     this.moveSnake = this.moveSnake.bind(this);
+    this.createBoard = this.createBoard.bind(this);
     this.changeSnakeDirection = this.changeSnakeDirection.bind(this);
   }
 
@@ -25,7 +26,7 @@ export default class Board extends Component {
     const board = []
     const snakeLocation = Math.floor(Math.random() * 30);
     let snackLocation = Math.floor(Math.random() * 30);
-    // if the snack is located at the head of snake
+    // if the snack is located at the head of snake, move the snack
     snackLocation === snakeLocation && snackLocation++;
 
     for (let k = 0; k < 30; k++) {
@@ -49,11 +50,12 @@ export default class Board extends Component {
   }
 
   componentDidMount() {
-    this.setState({ ...this.state, loading: false });
+    const intervalID = setInterval(this.moveSnake, 1000);
+    this.setState({ ...this.state, loading: false, intervalID }, this.moveSnake);
   }
 
   moveSnake() {
-
+    const direction = this.state.direction;
   }
 
   changeSnakeDirection(e) {
