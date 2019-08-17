@@ -16,10 +16,10 @@ export default class Board extends Component {
       board: this.createBoard(),
     }
 
-    
+
     this.createBoard = this.createBoard.bind(this);
-    this.autoMoveSnake = this.autoMoveSnake.bind(this);
-    this.manuallyMoveSnake = this.manuallyMoveSnake.bind(this);
+    this.moveSnake = this.moveSnake.bind(this);
+    this.changeSnakeDirection = this.changeSnakeDirection.bind(this);
   }
 
   createBoard() {
@@ -52,12 +52,24 @@ export default class Board extends Component {
     this.setState({ ...this.state, loading: false });
   }
 
-  autoMoveSnake() {
+  moveSnake() {
 
   }
 
-  manuallyMoveSnake() {
-
+  changeSnakeDirection(e) {
+    e.preventDefault();
+    const keyPressed = e.keyCode;
+    let direction;
+    if (keyPressed === 37) {
+      direction = 'right';
+    } else if (keyPressed === 38) {
+      direction = 'down';
+    } else if (keyPressed === 39) {
+      direction = 'left';
+    } else if (keyPressed === 40) {
+      direction = 'up';
+    }
+    this.setState({ ...this.state, direction });
   }
 
   render() {
