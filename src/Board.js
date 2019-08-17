@@ -16,7 +16,6 @@ export default class Board extends Component {
       board: this.createBoard(),
     }
 
-
     this.createBoard = this.createBoard.bind(this);
     this.moveSnake = this.moveSnake.bind(this);
     this.changeSnakeDirection = this.changeSnakeDirection.bind(this);
@@ -24,12 +23,13 @@ export default class Board extends Component {
 
   createBoard() {
     const board = []
+    const snakeLocation = Math.floor(Math.random() * 30);
     let snackLocation = Math.floor(Math.random() * 30);
     // if the snack is located at the head of snake
-    snackLocation === 15 && snackLocation++;
+    snackLocation === snakeLocation && snackLocation++;
 
     for (let k = 0; k < 30; k++) {
-      if (k !== 15 && k !== snackLocation) {
+      if (k !== snakeLocation && k !== snackLocation) {
         board.push([...new Array(30).fill(null)]);
       } else {
         let row;
@@ -38,9 +38,9 @@ export default class Board extends Component {
           left.push('snack');
           row = left.concat(new Array((30 - snackLocation)).fill(null));
         } else {
-          const left = new Array(14).fill(null);
+          const left = new Array((snakeLocation - 1)).fill(null);
           left.push('head');
-          row = left.concat(new Array(15).fill(null));
+          row = left.concat(new Array((30 - snakeLocation)).fill(null));
         }
         board.push(row);
       }
