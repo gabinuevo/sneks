@@ -198,7 +198,7 @@ export default class Board extends Component {
     } else if (keyPressed === 40 && direction !== 'down') {
       direction = 'up';
     }
-    this.setState({ ...this.state, direction });
+    this.setState(state => ({ ...state, direction }));
   }
 
   render() {
