@@ -75,11 +75,14 @@ export default class Board extends Component {
   }
 
   moveSnake() {
-    let { direction, snakeCoords, board, snakeLength } = this.state;
+    const { direction, snakeCoords, board, snakeLength } = this.state;
+
     const newBoard = board.map(r => r.slice());
+
+    const currSnakeUnitX = snakeCoords[0];
+    const currSnakeUnitY = snakeCoords[1];
+
     let i = 0;
-    let currSnakeUnitX = snakeCoords[0];
-    let currSnakeUnitY = snakeCoords[1];
     while (i < snakeLength) {
       if (i === 0) {
         if (direction === 'right') {
